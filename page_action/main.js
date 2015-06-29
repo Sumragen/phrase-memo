@@ -17,14 +17,27 @@ pAction.service('Logger', ['$interval', function($interval){
     };
 }]);
 
-pAction.factory('postman', function(){return postman;});
+pAction.factory('postman', ['$rootScope', function($rootScope){
+    /*wraps $rootScope.$apply over original postman function*/
+    return function(name){
+        var origResponse = postman(name);
+        var origSend = origResponse.send;
+        origResponse.send = function(){
+            var origSendResponse = origSend.call(arguments);
+            origSendResponse.then = function(cb){
+                $rootScope.$apply(cb.call(arguments));
+            };
+            return origSendResponse;
+        };
+        return origResponse;
+    };
+}]);
 
-pAction.controller('mainController', ['postman', '$scope', function(postman, $scope){
+pAction.controller('mainController', ['postman', function(postman){
     var that = this;
     that.isReady = false;
     postman('popShown').send().then(function(){
         that.isReady = true;
-        $scope.$apply();
     });
 }]);
 
