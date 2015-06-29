@@ -10,12 +10,10 @@ $(function () {
     };
 
     $('#init').click(function(){
-        chrome.runtime.sendMessage({type: 'popShown'});
+        postman('popShown').send();
     });
 
-    chrome.runtime.onMessage.addListener(function(request){
-        if (isMessageOfType('deployTrainer', request)){
-            log(request.message);
-        }
+    postman('deployTrainer').onMail(function(message){
+        log(message);
     });
 });

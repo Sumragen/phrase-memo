@@ -14,21 +14,19 @@ function getPhrases(xt) {
 
 function deployTrainer(phrases) {
     console.log(phrases);
-    chrome.runtime.sendMessage({type: "deployTrainer", message: "Phrases are gotten"});
+    postman('deployTrainer').send('Phrases are gotten');
 }
 
-chrome.runtime.onMessage.addListener(function (request) {
-    if (isMessageOfType('popShown', request)) {
-        console.info("Page Action clicked");
-        /*send message about to xt*/
-        chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-            if (tabs.length > 0) {
-                chrome.tabs.sendMessage(tabs[0].id, {giveXT: true}, function (data) {
-                    if ('xt' in data) {
-                        getPhrases(data['xt']).done(deployTrainer);
-                    }
-                });
-            }
-        });
-    }
+postman('popShown').onMail(function () {
+    console.info("Page Action clicked");
+    /*send message about to xt*/
+    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+        if (tabs.length > 0) {
+            postman('giveXT').send('', tabs[0].id).then(function (data) {
+                if ('xt' in data) {
+                    getPhrases(data['xt']).done(deployTrainer);
+                }
+            });
+        }
+    });
 });

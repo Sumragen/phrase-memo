@@ -13,10 +13,7 @@ function getXT(){
     }
     return null;
 }
-
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
-    console.info("Got message: " + request);
-    if ('giveXT' in request){
-        sendResponse({xt: getXT()});
-    }
+postman('giveXT').onMail(function(message, sendResponse){
+    console.info("Got message: " + message);
+    sendResponse({xt: getXT()});
 });
