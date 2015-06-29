@@ -7,8 +7,7 @@
  * uses jQuery Deferred obj
  *
  * motivation: create easy identifiable messages
- * @param name Name should b used to identify Postman instance
- * @type name: String
+ * @param name String should b used to identify Postman instance
  */
 function postman(name) {
     var deferred = $.Deferred;
@@ -66,6 +65,7 @@ function postman(name) {
             if (Boolean(_delivery)) {
                 cb(_delivery.payload || undefined, sendResponse);
             }
+            return true;
         });
     };
 

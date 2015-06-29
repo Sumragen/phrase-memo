@@ -14,17 +14,17 @@ function getPhrases(xt) {
 
 function deployTrainer(phrases) {
     console.log(phrases);
-    postman('deployTrainer').send('Phrases are gotten');
+    postman('readyForTraining').send();
 }
 
-postman('popShown').onMail(function () {
+postman('popShown').onMail(function (data, sendResponse) {
     console.info("Page Action clicked");
     /*send message about to xt*/
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
         if (tabs.length > 0) {
             postman('giveXT').send('', tabs[0].id).then(function (data) {
                 if ('xt' in data) {
-                    getPhrases(data['xt']).done(deployTrainer);
+                    getPhrases(data['xt']).done(sendResponse);
                 }
             });
         }

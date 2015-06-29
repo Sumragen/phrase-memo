@@ -1,5 +1,7 @@
-
-// When the extension is installed or upgraded ...
+/**
+ * this script is initialise application
+ * When the extension is installed or upgraded ...
+ */
 chrome.runtime.onInstalled.addListener(function() {
     // Replace all rules ...
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
