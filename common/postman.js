@@ -14,11 +14,11 @@ function postman(name) {
     var identityKey = 'postman';
     var getPackage = function (data) {
         /*wraps payload into package*/
-        var package = {
+        var _package = {
             payload: data || ''
         };
-        package[identityKey] = name;
-        return package;
+        _package[identityKey] = name;
+        return _package;
     };
     var checkDelivery = function (response) {
         /*gets delivery from package*/
@@ -42,7 +42,9 @@ function postman(name) {
     var send = function (data, tabId) {
         var _deferred = deferred();
         var _package = getPackage(data);
-        var _cb = function(response){_deferred.resolve(response)};
+        var _cb = function (response) {
+            _deferred.resolve(response);
+        };
         if (typeof tabId === 'undefined') {
             chrome.runtime.sendMessage(_package, _cb);
         } else {

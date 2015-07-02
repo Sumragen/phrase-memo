@@ -6,21 +6,66 @@
     <link rel="stylesheet" href="/css/page_action/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/page_action/bootstrap-theme.min.css"/>
 </head>
-<body>
-<header><h1>Word-Memo</h1></header>
-<main ng-controller="mainController as mContr">
-    <section ng-hide="mContr.isReady">Please wait....</section>
-    <section ng-show="mContr.isReady">We are ready....</section>
-</main>
-<footer ng-controller="messageController as lContr">
-    <div ng-repeat="log in lContr.logs">
-        <div>{{ log }}</div>
+<body class="container-fluid">
+<div class="row">
+    <div class="col-sm-12">
+        <header><h1>Word-Memo</h1></header>
     </div>
-</footer>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <main ng-controller="mainController as mContr">
+            <section ng-hide="mContr.isReady">Please wait....</section>
+            <section ng-show="mContr.isReady">
+                <h2>Trainer One</h2>
+
+                <div class="row" ng-controller="trainerOneController as trContr">
+                    <div ng-show="trContr.currentTest">
+                        <div class="col-sm-5 phrase">
+                            <h3>phrase</h3>
+
+                            <p>{{trContr.currentTest.phrase}}</p>
+                        </div>
+                        <div class="col-sm-7 choices">
+                            <h3>select correct definition</h3>
+
+                            <div class="has-feedback" ng-repeat="choice in trContr.currentTest.choices">
+                                <div>
+                                    <label><input type="radio" ng-model="trContr.result"
+                                                  ng-value="choice"
+                                                  ng-change="trContr.checkResult()"/>{{choice.choice}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-7 col-sm-offset-5">
+                            <button type="button" class="btn btn-info"
+                                    ng-click="trContr.getTest()" ng-disabled="!trContr.result">Next
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-12">
+                        <button type="button" class="btn btn-info"
+                                ng-click="trContr.getTest()" ng-hide="trContr.currentTest">Get test
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer ng-controller="messageController as lContr">
+            <div ng-repeat="log in lContr.logs">
+                <div class="has-error">{{ log }}</div>
+            </div>
+        </footer>
+    </div>
+
+</div>
+
 <script src="/lib/jquery-2.1.3.min.js"></script>
 <script src="/lib/angular.min.js"></script>
 <script src="/common/utils.js"></script>
 <script src="/common/postman.js"></script>
 <script src="/page_action/main.js"></script>
+<script src="/page_action/trainerOne.js"></script>
 </body>
 </html>

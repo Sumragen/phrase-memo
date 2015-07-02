@@ -10,7 +10,8 @@
       "common/utils.js",
       "common/postman.js",
       "background/init.js",
-      "background/main.js"
+      "background/main.js",
+      "background/trainerOne.js"
     ]
   },
   "page_action": {

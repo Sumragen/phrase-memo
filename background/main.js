@@ -1,20 +1,17 @@
+var phrases = null;
+
 function getPhrases(xt) {
     var url = "https://translate.google.com.ua/translate_a/sg?client=t&cm=g&hl=en&xt=" + xt;
     return $.get(url).then(
         function (successData) {
             var result = eval(successData);
-            return result[2];
+            phrases = result[2];
         },
         function (a, b, c) {
             console.warn("Can't fetch phrasebook");
             console.error(c);
         }
     )
-}
-
-function deployTrainer(phrases) {
-    console.log(phrases);
-    postman('readyForTraining').send();
 }
 
 postman('popShown').onMail(function (data, sendResponse) {
