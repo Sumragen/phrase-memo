@@ -51,9 +51,38 @@
         console.debug(dictionary);
     };
 
+    /**
+     * returns an index between 0 and max
+     * @param length of an array
+     * @returns {number}
+     */
+    var getRandomIndex = function(length){
+       return Math.floor(Math.random() * length);
+    };
+
     var getRandomIndexes = function (count) {
+        var _result = [];
+        for (var i= 0; i < choicesLength; i++){
+            _result.push(getRandomIndex(dictionary.length));
+        }
+        return _result;
+    };
+
+    /**
+     * gets first Element in array and inserts it randomly in arr
+     * @param arr
+     */
+    var shakeFirstElem = function(arr){
+       var first = arr.shift();
+        arr.splice(getRandomIndex(arr.length), 0, first);
+    };
+
+    /**
+     * returns phrase to learn
+     */
+    var getPhrase = function(){
         /*todo*/
-        return [1, 2, 3, 4];
+        return dictionary[getRandomIndex(dictionary.length)];
     };
 
     /**
@@ -86,6 +115,7 @@
             });
             isFirst = false;
         });
+        shakeFirstElem(test.choices);
         return test;
     };
 

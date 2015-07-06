@@ -16,7 +16,6 @@ pAction.controller('trainerOneController', ['postman', function (postman) {
     };
 
     that.checkResult = function () {
-        console.log(that.result);
         //postman('recordResult').send(result);
     };
 }]);

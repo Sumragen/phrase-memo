@@ -2,3 +2,9 @@ body {
     width: 800px;
     min-height: 500px;
 }
+
+.phrase,
+.choice{
+    font-size: large;
+    font-weight: bold;
+}

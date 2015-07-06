@@ -21,16 +21,18 @@
 
                 <div class="row" ng-controller="trainerOneController as trContr">
                     <div ng-show="trContr.currentTest">
-                        <div class="col-sm-5 phrase">
+                        <div class="col-sm-3 phrase">
                             <h3>phrase</h3>
 
-                            <p>{{trContr.currentTest.phrase}}</p>
+                            <p class="phrase">{{trContr.currentTest.phrase}}</p>
                         </div>
-                        <div class="col-sm-7 choices">
+                        <div class="col-sm-9 choices">
                             <h3>select correct definition</h3>
 
-                            <div class="has-feedback" ng-repeat="choice in trContr.currentTest.choices">
-                                <div>
+                            <div ng-repeat="choice in trContr.currentTest.choices"
+                                 ng-class="{'has-error': choice==trContr.result&&!choice.isCorrect,
+                                 'has-success': trContr.result&&choice.isCorrect}">
+                                <div class="checkbox choice">
                                     <label><input type="radio" ng-model="trContr.result"
                                                   ng-value="choice"
                                                   ng-change="trContr.checkResult()"/>{{choice.choice}}</label>
