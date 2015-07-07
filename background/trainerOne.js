@@ -73,8 +73,17 @@
      * @param arr
      */
     var shakeFirstElem = function(arr){
-       var first = arr.shift();
-        arr.splice(getRandomIndex(arr.length), 0, first);
+        var len = arr.length;
+        var newIndex = getRandomIndex(len);
+        if (newIndex == 0){
+            return;
+        }
+        var first = arr.shift();
+        if (newIndex == len){
+            arr.append();
+        } else {
+            arr.splice(newIndex, 0, first);
+        }
     };
 
     /**
