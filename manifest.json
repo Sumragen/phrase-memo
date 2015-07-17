@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Word-Memo",
+  "name": "Phrase-Memo",
   "version": "0.0.1",
-  "description": "This is your personal trainer to master phrases from your Google Translate PhraseBook",
+  "description": "For those who use Google Translate PhraseBook! Memorize all your phrases with help of Phrase-Memo trainers",
   "background": {
     "persistent": false,
     "scripts": [
@@ -19,7 +19,7 @@
       "19": "img/page_action/icon19.png",
       "38": "img/page_action/icon38.png"
     },
-    "default_title": "Word-Memo",
+    "default_title": "Phrase-Memo",
     "default_popup": "page_action/popup.html"
   },
   "permissions": [
