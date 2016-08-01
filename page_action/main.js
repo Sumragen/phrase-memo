@@ -27,7 +27,7 @@ pAction.factory('postman', ['$timeout', function ($timeout) {
         var origResponse = postman(name);
         var origSend = origResponse.send;
         origResponse.send = function (message) {
-            var origSendResponse = origSend.call(message);
+            var origSendResponse = origSend.call(null, message);
             var origThenFunc = origSendResponse.then;
             origSendResponse.then = function (cb) {
                 origThenFunc(function (response) {
