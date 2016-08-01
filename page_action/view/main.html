@@ -1,0 +1,8 @@
+<section>
+    <div class="row" ng-controller="trainerController as trContr">
+        <div ng-hide="trContr.template" ng-include="'/page_action/view/menu.html'"></div>
+
+        <!--test-->
+        <div ng-show="trContr.template" ng-include="'/page_action/view/' + trContr.template"></div>
+    </div>
+</section>

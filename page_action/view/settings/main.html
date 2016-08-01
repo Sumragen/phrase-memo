@@ -1,0 +1,27 @@
+<div class="col-sm-12">
+    <h2>SETTINGS</h2>
+    <div class="line-separator"></div>
+</div>
+
+
+<div class="s-right-title">
+    <label for="select_label" class="col-md-2 control-label">Select label</label>
+
+    <div class="col-md-10">
+        <select id="select_label" class="form-control" ng-model="template_index" ng-change="trContr.getSettingsFor(template_index)">
+            <option>Mod I</option>
+            <option>Mod II</option>
+            <option>Mod III</option>
+            <option>Global</option>
+        </select>
+    </div>
+</div>
+
+<div class="s-container">
+    <div ng-include="'/page_action/view/settings/' + trContr.settingsEndpoint[template_index].template"></div>
+</div>
+
+<div class="col-sm-7 col-sm-offset-5">
+    <a class="btn btn-info" ng-click="trContr.returnToMenu()">Menu</a>
+    <a class="btn btn-primary" ng-click="trContr.applyChanges(template_index)">Apply</a>
+</div>

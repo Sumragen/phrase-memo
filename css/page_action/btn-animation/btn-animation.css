@@ -1,0 +1,62 @@
+.s-common-btn:hover {
+    animation: btn-common-animation .4s forwards;
+    -webkit-animation: btn-common-animation .4s forwards;
+}
+
+.s-main-container:hover .s-common-btn {
+    opacity: 1;
+}
+
+@keyframes btn-common-animation {
+    from {
+        font-weight: 300;
+    }
+    to {
+        font-weight: 700;
+    }
+}
+
+.s-main-container:hover .s-right-upper-btn {
+    transition-delay: .36s;
+}
+
+.s-main-container:hover .s-right-middle-btn {
+    transition-delay: .4s;
+}
+
+.s-main-container:hover .s-right-lower-btn {
+    transition-delay: .05s;
+}
+
+.s-main-container:hover .s-left-upper-btn {
+    transition-delay: .27s;
+}
+
+.s-main-container:hover .s-left-middle-btn {
+    transition-delay: .21s;
+}
+
+.s-main-container:hover .s-left-lower-btn {
+    transition-delay: .15s;
+}
+
+/*reverse*/
+.s-main-container:not(:hover) .s-right-upper-btn {
+    transition-delay: .05s;
+}
+
+.s-main-container:not(:hover) .s-right-lower-btn {
+    transition-delay: .32s;
+}
+
+.s-main-container:not(:hover) .s-left-upper-btn {
+    transition-delay: .14s;
+}
+
+.s-main-container:not(:hover) .s-left-middle-btn {
+    transition-delay: .19s;
+}
+
+.s-main-container:not(:hover) .s-left-lower-btn {
+    transition-delay: .23s;
+}

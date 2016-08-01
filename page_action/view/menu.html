@@ -1,0 +1,36 @@
+<span class="s-main-container">
+<!--background circle-->
+    <svg width="576" height="380" viewBox="0 0 288 288" xmlns="http://www.w3.org/2000/svg"
+         version="1.1">
+        <g id="seed" transform="translate(229 178)" stroke-width="1" stroke="grey" fill="none">
+            <circle cx="0" r="102"
+                    stroke-dashoffset="100"
+                    stroke-dasharray="10,10"/>
+            <animateTransform attributeType="xml" attributeName="transform" type="rotate"
+                              values="0 0 0; -360 0 0" dur="15s" additive="sum"
+                              repeatCount="indefinite"/>
+        </g>
+    </svg>
+    <svg class="s-svg-container" width="630" height="280" viewPort="0 0 200 200" version="1.1"
+         xmlns="http://www.w3.org/2000/svg">
+        <circle class="s-svg-circle" r="136" cx="315" cy="140" fill="transparent" stroke="#191419"
+                stroke-width="4"
+                stroke-dashoffset="854.5"
+                stroke-dasharray="{{2*136*3.14159265359}}">
+        </circle>
+
+        <line class="s-line s-right-upper" x1="438" y1="80" x2="615" y2="80"/>
+        <line class="s-line s-left-upper" x1="195" y1="80" x2="18" y2="80"/>
+        <line class="s-line s-right-lower" x1="438" y1="200" x2="615" y2="200"/>
+        <line class="s-line s-left-lower" x1="195" y1="200" x2="18" y2="200"/>
+    </svg>
+
+    <!--buttons-->
+    <div class="s-common-btn s-left-upper-btn" ng-click="trContr.openSettings()">SETTINGS</div>
+    <div class="s-common-btn s-disabled-btn s-left-middle-btn">LANGUAGE</div>
+    <div class="s-common-btn s-disabled-btn s-left-lower-btn">PREFERENCE</div>
+    <div class="s-common-btn s-right-upper-btn" ng-click="trContr.getTestModOne()">MOD I</div>
+    <div class="s-common-btn s-right-middle-btn" ng-click="trContr.getTestModTwo()">MOD II</div>
+    <div class="s-common-btn s-disabled-btn s-right-lower-btn">MOD III</div>
+    <p class="s-font s-svg-welcome"><span></span></p>
+</span>

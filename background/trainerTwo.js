@@ -11,7 +11,6 @@
 
     var nativeDictKey = 'ru';
     var choicesLength = 4;
-    var amountOfTests = 20;
     /**
      * array of {id, from, to, toDictKey}
      * @type {Array}
@@ -161,39 +160,27 @@
         if (dictionary.length == 0) {
             prepareDictionary();
         }
-        var test = {
-            phrase: null,
-            choices: [],
+        var phrase = getPhrase();
+        return {
+            phrase: phrase.from,
+            definition: phrase.to,
             answer: {
-                isCorrect: 0,
+                isCorrect:0,
                 selected: null
             }
         };
-        var isFirst = true;
-        utils.forEach(getPhrases(choicesLength), function (phrase) {
-            if (isFirst) {
-                test.phrase = phrase.from;
-            }
-            test.choices.push({
-                choice: phrase.to,
-                isCorrect: isFirst
-            });
-            isFirst = false;
-        });
-        shakeFirstElem(test.choices);
-        return test;
     };
 
     var recordResult = function (result) {
         /*todo*/
     };
 
-    postman('getTestModOne').onMail(function (data, sendResponse) {
+    postman('getTestModTwo').onMail(function (data, sendResponse) {
         var responseBody = {
-            template: 'trainer/one.html',
+            template: 'trainer/two.html',
             tests: []
         };
-        utils.forEach(new Array(amountOfTests), function () {
+        utils.forEach(new Array(20), function () {
             responseBody.tests.push(getTest());
         });
         sendResponse(responseBody);
@@ -201,19 +188,5 @@
 
     postman('recordResult').onMail(function (result) {
         recordResult(result);
-    });
-    postman('getSettingsModOne').onMail(function (data, sendResponse) {
-        var someSettings = {
-            nativeDictKey: nativeDictKey,
-            choicesLength: choicesLength,
-            amountOfTests: amountOfTests
-        };
-        sendResponse(someSettings);
-    });
-    postman('setSettingsModOne').onMail(function (data, sendResponse) {
-        nativeDictKey = data.nativeDictKey;
-        choicesLength = data.choicesLength;
-        amountOfTests = data.amountOfTests;
-        sendResponse(data);
-    });
+    })
 })();

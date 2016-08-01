@@ -11,7 +11,8 @@
       "common/postman.js",
       "background/init.js",
       "background/main.js",
-      "background/trainerOne.js"
+      "background/trainerOne.js",
+      "background/trainerTwo.js"
     ]
   },
   "page_action": {

@@ -1,0 +1,84 @@
+@import "line-animation/line-animation.css";
+@import "common.css";
+@import "btn-fab.css";
+@import "btn-animation/btn-spec.css";
+@import "btn-animation/btn-animation.css";
+@import "loader.css";
+@import "roboto.css";
+@import "material-icons.css";
+@import "bootstrap.min.css";
+@import "bootstrap-material-design.css";
+@import "ripples.css";
+
+.s-container{
+    height: 380px;
+    /*top: 20px;*/
+    position: relative;
+    /*bottom: 20px;*/
+}
+
+.s-svg-container {
+    position: absolute;
+    top: 95px;
+    left: 85px;
+}
+
+.s-svg-welcome {
+    font-weight: 600;
+    font-size: 40px;
+    position: absolute;
+    top: 201px;
+    left: 307px;
+}
+
+.s-svg-welcome span::after {
+    transition-timing-function: ease-in-out;
+    -webkit-transition-timing-function: ease-in-out;
+    content: 'WELCOME';
+}
+
+.s-bg-circle {
+    animation-name: bg-circle;
+    animation-duration: 15s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@-webkit-keyframes bg-circle {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes bg-circle {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.s-svg-circle {
+    transition: .4s ease-in-out;
+    -webkit-transition: .4s ease-in-out;
+}
+
+.s-main-container:hover .s-svg-circle {
+    stroke-dashoffset: 0;
+}
+
+.s-main-container:not(:hover) .s-svg-circle {
+    transition-delay: .2s;
+}
+
+/*span.s-main-container:hover p.s-svg-welcome span {*/
+/*display: none;*/
+/*}*/
+
+/*span.s-main-container:hover p.s-svg-welcome::after {*/
+/*content: "START!";*/
+/*}*/

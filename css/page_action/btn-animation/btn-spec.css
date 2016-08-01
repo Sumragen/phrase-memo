@@ -1,0 +1,36 @@
+.s-common-btn{
+    opacity: 0;
+    position: absolute;
+    font-size: 30px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    -webkit-transition: .3s ease-in-out;
+}
+.s-disabled-btn{
+    cursor: not-allowed;
+}
+.s-left-upper-btn{
+    top: 120px;
+    left: 130px;
+}
+.s-left-middle-btn{
+    top: 210px;
+    left: 90px;
+}
+.s-left-lower-btn{
+    top: 310px;
+    left: 90px;
+}
+.s-right-upper-btn{
+    top: 120px;
+    right: 180px;
+}
+.s-right-middle-btn{
+    top: 210px;
+    right: 150px;
+}
+.s-right-lower-btn{
+    top: 310px;
+    right: 170px;
+}

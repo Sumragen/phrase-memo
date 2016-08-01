@@ -1,0 +1,29 @@
+body {
+    width: 800px;
+    min-height: 470px;
+    background-color: #f2f2f2;
+}
+
+.phrase,
+.choice {
+    font-size: large;
+    font-weight: bold;
+}
+
+.s-not-selected-radio{
+    color: #585858 !important;
+}
+
+.s-has-error {
+    color: #b71d13 !important;
+}
+
+.s-has-success {
+    color: #3d9847 !important;
+}
+
+.line-separator {
+    height: 1px;
+    background: #717171;
+    border-bottom: 1px solid #313030;
+}

@@ -3,7 +3,10 @@
 var log = function () {
 };
 
-var pAction = angular.module('pAction', []);
+var pAction = angular.module('pAction', [])
+    .config([function () {
+        $.material.init();
+    }]);
 
 pAction.service('Logger', ['$interval', function ($interval) {
     var that = this;

@@ -1,0 +1,15 @@
+<div class="col-sm-12">
+    <form class="form-horizontal">
+            <div class="form-group">
+                <label for="inputAmountOfTests" class="col-md-2 control-label">Amount of tests</label>
+
+                <div class="col-md-10">
+                    <input type="number" min="5" max="30" ng-model="trContr.settingsParams.amountOfTests" class="form-control" id="inputAmountOfTests" placeholder="Amount">
+                </div>
+            </div>
+
+            <div>nativeDictKey: {{trContr.settingsParams.nativeDictKey}}</div>
+            <div>choicesLength: {{trContr.settingsParams.choicesLength}}</div>
+            <div>testAmount: {{trContr.settingsParams.amountOfTests}}</div>
+    </form>
+</div>
