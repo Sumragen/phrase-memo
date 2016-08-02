@@ -10,7 +10,7 @@
     "use strict";
 
     var nativeDictKey = 'ru';
-    var choicesLength = 4;
+    var amountOfTests = 20;
     /**
      * array of {id, from, to, toDictKey}
      * @type {Array}
@@ -180,10 +180,22 @@
             template: 'trainer/two.html',
             tests: []
         };
-        utils.forEach(new Array(20), function () {
+        utils.forEach(new Array(amountOfTests), function () {
             responseBody.tests.push(getTest());
         });
         sendResponse(responseBody);
+    });
+    postman('getSettingsModTwo').onMail(function (data, sendResponse) {
+        var someSettings = {
+            nativeDictKey: nativeDictKey,
+            amountOfTests: amountOfTests
+        };
+        sendResponse(someSettings);
+    });
+    postman('setSettingsModTwo').onMail(function (data, sendResponse) {
+        nativeDictKey = data.nativeDictKey;
+        amountOfTests = data.amountOfTests;
+        sendResponse(data);
     });
 
     postman('recordResult').onMail(function (result) {

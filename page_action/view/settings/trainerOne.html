@@ -1,20 +1,25 @@
 <div class="col-sm-12">
     <form class="form-horizontal">
-            <div class="form-group">
-                <label for="inputAmountOfTests" class="col-md-2 control-label">Amount of tests</label>
+        <div class="form-group">
 
-                <div class="col-md-10">
-                    <input type="number" min="5" max="30" ng-model="stgsCtrl.settingsParams.amountOfTests" class="form-control" id="inputAmountOfTests" placeholder="Amount">
-                </div>
-                <label for="inputChoicesLength" class="col-md-2 control-label">Amount of choices in test</label>
-
-                <div class="col-md-10">
-                    <input type="number" min="2" max="6" ng-model="stgsCtrl.settingsParams.choicesLength" class="form-control" id="inputChoicesLength" placeholder="Amount">
-                </div>
+            <label for="inputAmountOfTests" class="col-md-2 control-label">Amount of tests</label>
+            <div class="col-md-10">
+                <input id="inputAmountOfTests"
+                       class="form-control"
+                       type="number" min="5" max="40"
+                       ng-model="settingsCtrl.settingsParams.amountOfTests"
+                       placeholder="Amount">
             </div>
-
-            <div>nativeDictKey: {{stgsCtrl.settingsParams.nativeDictKey}}</div>
-            <div>choicesLength: {{stgsCtrl.settingsParams.choicesLength}}</div>
-            <div>testAmount: {{stgsCtrl.settingsParams.amountOfTests}}</div>
+        </div>
+        <div class="form-group">
+            <label for="inputChoicesLength" class="col-md-2 control-label">Amount of choices in test</label>
+            <div class="col-md-10">
+                <input id="inputChoicesLength"
+                       class="form-control"
+                       type="number" min="2" max="6"
+                       ng-model="settingsCtrl.settingsParams.choicesLength"
+                       placeholder="Amount">
+            </div>
+        </div>
     </form>
 </div>

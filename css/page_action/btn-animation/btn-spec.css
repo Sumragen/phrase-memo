@@ -9,6 +9,7 @@
 }
 .s-disabled-btn{
     cursor: not-allowed;
+    color: rgba(0, 0, 0, 0.35);
 }
 .s-left-upper-btn{
     top: 120px;

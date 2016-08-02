@@ -8,6 +8,24 @@ pAction.controller('settingsController', [
     'mainService',
     function (postman, $scope, mainService) {
         var that = this;
+        that.template_index = 'Global';
+        that.difficult_index = 'Normal';
+
+        that.defaultDifficults = {
+            'Easy': {
+                amountOfTests: 10,
+                choicesLength: 3
+            },
+            'Normal': {
+                amountOfTests: 20,
+                choicesLength: 4
+            },
+            'Hard': {
+                amountOfTests: 30,
+                choicesLength: 6
+            }
+        };
+
         that.settingsEndpoint = {
             'Mod I': {
                 name: 'ModOne',
@@ -16,13 +34,17 @@ pAction.controller('settingsController', [
             'Mod II': {
                 name: 'ModTwo',
                 template: 'trainerTwo.html'
+            },
+            'Global': {
+                name: 'Global',
+                template: 'global.html'
             }
         };
 
         that.getSettingsFor = function (index) {
             postman('getSettings' + that.settingsEndpoint[index].name).send().then(function (res) {
-                    that.settingsParams = res;
-                })
+                that.settingsParams = res;
+            })
         };
 
         that.returnToMenu = function () {
@@ -30,8 +52,13 @@ pAction.controller('settingsController', [
         };
 
         that.applyChanges = function (index) {
-            postman('setSettings' + that.settingsEndpoint[index].name).send(that.settingsParams).then(function (res) {
-
-            });
+            if (that.settingsEndpoint[index].name == 'Global') {
+                postman('setSettingsModOne').send(that.defaultDifficults[that.difficult_index]).then(function (res) {
+                    postman('setSettingsModTwo').send(that.defaultDifficults[that.difficult_index])
+                });
+            } else {
+                postman('setSettings' + that.settingsEndpoint[index].name).send(that.settingsParams).then(function (res) {
+                });
+            }
         }
     }]);

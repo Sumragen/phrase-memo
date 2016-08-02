@@ -10,9 +10,19 @@
 @import "bootstrap-material-design.css";
 @import "ripples.css";
 
+.form-group{
+    margin: 0;
+    padding-bottom: 0;
+}
+.form-group label.control-label{
+    margin: 0;
+}
+
 .s-container{
-    height: 380px;
+    height: 270px;
     /*top: 20px;*/
+    /*overflow-y: auto;*/
+    /*overflow-x: hidden;*/
     position: relative;
     /*bottom: 20px;*/
 }
