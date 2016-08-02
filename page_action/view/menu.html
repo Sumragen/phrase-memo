@@ -1,4 +1,4 @@
-<span class="s-main-container">
+<span ng-controller="menuController" class="s-main-container">
 <!--background circle-->
     <svg width="576" height="380" viewBox="0 0 288 288" xmlns="http://www.w3.org/2000/svg"
          version="1.1">
@@ -26,11 +26,11 @@
     </svg>
 
     <!--buttons-->
-    <div class="s-common-btn s-left-upper-btn" ng-click="trContr.openSettings()">SETTINGS</div>
+    <div class="s-common-btn s-left-upper-btn" ng-click="openSettings()">SETTINGS</div>
     <div class="s-common-btn s-disabled-btn s-left-middle-btn">LANGUAGE</div>
     <div class="s-common-btn s-disabled-btn s-left-lower-btn">PREFERENCE</div>
-    <div class="s-common-btn s-right-upper-btn" ng-click="trContr.getTestModOne()">MOD I</div>
-    <div class="s-common-btn s-right-middle-btn" ng-click="trContr.getTestModTwo()">MOD II</div>
+    <div class="s-common-btn s-right-upper-btn" ng-click="openTestModOne()">MOD I</div>
+    <div class="s-common-btn s-right-middle-btn" ng-click="openTestModTwo()">MOD II</div>
     <div class="s-common-btn s-disabled-btn s-right-lower-btn">MOD III</div>
     <p class="s-font s-svg-welcome"><span></span></p>
 </span>

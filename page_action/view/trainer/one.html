@@ -1,47 +1,49 @@
-<div class="col-sm-12">
-    <h2>MOD I</h2>
-    <div class="line-separator"></div>
-    <h5>Select correct definition</h5>
-</div>
-<div class="s-container">
+<div ng-controller="modOneController as mOneCtrl">
     <div class="col-sm-12">
-        <a ng-repeat="test in trContr.tests track by $index"
-           ng-click="trContr.setTestIndex($index)"
-           class="active btn btn-default btn-fab s-btn-fab">
-            <i class="material-icons"
-               ng-class="{'s-has-error': test.answer.isCorrect < 0,
-                                 's-has-success': test.answer.isCorrect > 0}">
-                {{test.answer.isCorrect > 0
-                ? 'add_circle_outline'
-                : (test.answer.isCorrect < 0)
-                ? 'remove_circle_outline'
-                : ($index == trContr.test_index)
-                ? 'radio_button_checked'
-                : 'radio_button_unchecked'}}</i>
-        </a>
+        <h2>MOD I</h2>
+        <div class="line-separator"></div>
+        <h5>Select correct definition</h5>
     </div>
+    <div class="s-container">
+        <div class="col-sm-12">
+            <a ng-repeat="test in mOneCtrl.tests track by $index"
+               ng-click="setTestIndex($index)"
+               class="active btn btn-default btn-fab s-btn-fab">
+                <i class="material-icons"
+                   ng-class="{'s-has-error': test.answer.isCorrect < 0,
+                                 's-has-success': test.answer.isCorrect > 0}">
+                    {{test.answer.isCorrect > 0
+                    ? 'add_circle_outline'
+                    : (test.answer.isCorrect < 0)
+                    ? 'remove_circle_outline'
+                    : ($index == mOneCtrl.test_index)
+                    ? 'radio_button_checked'
+                    : 'radio_button_unchecked'}}</i>
+            </a>
+        </div>
 
-    <div class="col-sm-3 phrase">
-        <h3>Phrase : </h3>
-        <div>
-            <p class="phrase">{{trContr.tests[trContr.test_index].phrase}}</p>
-            <div class="col-sm-9 choices">
-                <div ng-repeat="choice in trContr.tests[trContr.test_index].choices">
-                    <div class="radio choice">
-                        <label class="s-not-selected-radio" ng-class="{'s-has-error': choice==trContr.result&&!choice.isCorrect,
-                                 's-has-success': trContr.result&&choice.isCorrect}">
-                            <input type="radio" ng-model="trContr.result" ng-value="choice"
-                                   ng-click="trContr.setAnswerTrOne(choice)"
-                                   ng-change="trContr.checkResult()"/>{{choice.choice}}</label>
+        <div class="col-sm-12 phrase">
+            <h3>Phrase : </h3>
+            <div>
+                <p class="phrase">{{mOneCtrl.tests[mOneCtrl.test_index].phrase}}</p>
+                <div class="col-sm-9 choices">
+                    <div ng-repeat="choice in mOneCtrl.tests[mOneCtrl.test_index].choices">
+                        <div class="radio choice">
+                            <label class="s-not-selected-radio" ng-class="{'s-has-error': choice==mOneCtrl.result&&!choice.isCorrect,
+                                 's-has-success': mOneCtrl.result && choice.isCorrect}">
+                                <input type="radio" ng-model="mOneCtrl.result" ng-value="choice"
+                                       ng-click="setAnswer(choice)"
+                                       ng-change="checkResult()"/>{{choice.choice}}</label>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-sm-7 col-sm-offset-5">
-        <a class="btn btn-info" ng-click="trContr.returnToMenu()">Menu</a>
-        <a class="btn btn-primary" ng-click="trContr.prevTest()" ng-disabled="trContr.test_index <= 0">Prev</a>
-        <a class="btn btn-success" ng-click="trContr.nextTest()" ng-disabled="trContr.test_index >= 19">Next</a>
+        <div class="col-sm-7 col-sm-offset-5">
+            <a class="btn btn-info" ng-click="returnToMenu()">Menu</a>
+            <a class="btn btn-primary" ng-click="prevTest()" ng-disabled="mOneCtrl.test_index <= 0">Prev</a>
+            <a class="btn btn-success" ng-click="nextTest()" ng-disabled="mOneCtrl.test_index >= mOneCtrl.tests.length - 1">Next</a>
+        </div>
     </div>
 </div>

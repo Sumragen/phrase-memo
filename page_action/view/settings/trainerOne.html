@@ -4,12 +4,17 @@
                 <label for="inputAmountOfTests" class="col-md-2 control-label">Amount of tests</label>
 
                 <div class="col-md-10">
-                    <input type="number" min="5" max="30" ng-model="trContr.settingsParams.amountOfTests" class="form-control" id="inputAmountOfTests" placeholder="Amount">
+                    <input type="number" min="5" max="30" ng-model="stgsCtrl.settingsParams.amountOfTests" class="form-control" id="inputAmountOfTests" placeholder="Amount">
+                </div>
+                <label for="inputChoicesLength" class="col-md-2 control-label">Amount of choices in test</label>
+
+                <div class="col-md-10">
+                    <input type="number" min="2" max="6" ng-model="stgsCtrl.settingsParams.choicesLength" class="form-control" id="inputChoicesLength" placeholder="Amount">
                 </div>
             </div>
 
-            <div>nativeDictKey: {{trContr.settingsParams.nativeDictKey}}</div>
-            <div>choicesLength: {{trContr.settingsParams.choicesLength}}</div>
-            <div>testAmount: {{trContr.settingsParams.amountOfTests}}</div>
+            <div>nativeDictKey: {{stgsCtrl.settingsParams.nativeDictKey}}</div>
+            <div>choicesLength: {{stgsCtrl.settingsParams.choicesLength}}</div>
+            <div>testAmount: {{stgsCtrl.settingsParams.amountOfTests}}</div>
     </form>
 </div>

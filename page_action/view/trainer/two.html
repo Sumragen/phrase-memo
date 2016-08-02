@@ -1,39 +1,41 @@
-<div class="col-sm-12">
-    <h2>MOD II</h2>
-    <div class="line-separator"></div>
-    <h5>Enter correct definition</h5>
-</div>
+<div ng-controller="modTwoController as mTwoCtrl">
+    <div class="col-sm-12">
+        <h2>MOD II</h2>
+        <div class="line-separator"></div>
+        <h5>Enter correct definition</h5>
+    </div>
 
-<div class="col-sm-12">
-    <a ng-repeat="test in trContr.tests track by $index"
-       ng-click="trContr.setTestIndex($index)"
-       class="btn btn-default btn-fab s-btn-fab">
-        <i class="material-icons"
-           ng-active="true"
-           ng-class="{'s-has-error': test.answer.isCorrect < 0,
+    <div class="col-sm-12">
+        <a ng-repeat="test in mTwoCtrl.tests track by $index"
+           ng-click="mTwoCtrl.setTestIndex($index)"
+           class="btn btn-default btn-fab s-btn-fab">
+            <i class="material-icons"
+               ng-active="true"
+               ng-class="{'s-has-error': test.answer.isCorrect < 0,
                                  's-has-success': test.answer.isCorrect > 0}">
-            {{test.answer.isCorrect > 0
-            ? 'add_circle_outline'
-            : (test.answer.isCorrect < 0)
+                {{test.answer.isCorrect > 0
+                ? 'add_circle_outline'
+                : (test.answer.isCorrect < 0)
                 ? 'remove_circle_outline'
-                : ($index == trContr.test_index)
-                    ? 'radio_button_checked'
-                    : 'radio_button_unchecked'}}</i>
-    </a>
-</div>
+                : ($index == mTwoCtrl.test_index)
+                ? 'radio_button_checked'
+                : 'radio_button_unchecked'}}</i>
+        </a>
+    </div>
 
-<div class="col-sm-3 phrase">
-    <h3>Phrase : </h3>
-    <p class="phrase">{{trContr.tests[trContr.test_index].phrase}}</p>
-</div>
-<div class="form-group col-sm-12 choices">
-    <input type="text" class="form-control" ng-change="trContr.checkAnswerTrTwo(trContr.result)"
-           ng-model="trContr.result">
-</div>
+    <div class="col-sm-12 phrase">
+        <h3>Phrase : </h3>
+        <p class="phrase">{{mTwoCtrl.tests[mTwoCtrl.test_index].phrase}}</p>
+    </div>
+    <div class="form-group col-sm-12 choices">
+        <input type="text" class="form-control" ng-change="mTwoCtrl.checkAnswer(mTwoCtrl.result)"
+               ng-model="mTwoCtrl.result">
+    </div>
 
-<div class="col-sm-7 col-sm-offset-5">
-    <a class="btn btn-info" ng-click="trContr.returnToMenu()">Menu</a>
-    <a class="btn btn-primary" ng-click="trContr.prevTest()" ng-disabled="trContr.test_index <= 0">Prev</a>
-    <a class="btn btn-warning" ng-click="trContr.showAnswer()">Answer</a>
-    <a class="btn btn-success" ng-click="trContr.nextTest()" ng-disabled="trContr.test_index >= 19">Next</a>
+    <div class="col-sm-7 col-sm-offset-5">
+        <a class="btn btn-info" ng-click="mTwoCtrl.returnToMenu()">Menu</a>
+        <a class="btn btn-primary" ng-click="mTwoCtrl.prevTest()" ng-disabled="mTwoCtrl.test_index <= 0">Prev</a>
+        <a class="btn btn-warning" ng-click="mTwoCtrl.showAnswer()">Answer</a>
+        <a class="btn btn-success" ng-click="mTwoCtrl.nextTest()" ng-disabled="mTwoCtrl.test_index >= mTwoCtrl.tests.length - 1">Next</a>
+    </div>
 </div>

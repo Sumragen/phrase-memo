@@ -7,12 +7,12 @@
 <body class="container-fluid">
 <div class="row">
     <div class="col-sm-12">
-        <main ng-controller="mainController as mContr">
-            <div ng-hide="mContr.isReady" ng-include="'/page_action/view/loader.html'"></div>
-            <div ng-show="mContr.isReady" ng-include="'/page_action/view/main.html'"></div>
+        <main ng-controller="mainController as mainCtrl">
+            <div ng-hide="mainCtrl.isReady" ng-include="'/page_action/view/loader.html'"></div>
+            <div ng-show="mainCtrl.isReady" ng-include="'/page_action/view/main.html'"></div>
         </main>
-        <footer ng-controller="messageController as lContr">
-            <div ng-repeat="log in lContr.logs">
+        <footer ng-controller="messageController as msgCtrl">
+            <div ng-repeat="log in msgCtrl.logs">
                 <div class="has-error">{{ log }}</div>
             </div>
         </footer>
@@ -30,5 +30,10 @@
 <script src="/common/postman.js"></script>
 <script src="/page_action/main.js"></script>
 <script src="/page_action/trainerController.js"></script>
+<script src="/page_action/js/mainService.js"></script>
+<script src="/page_action/js/menu/modOne/modOneController.js"></script>
+<script src="/page_action/js/menu/modTwo/modTwoController.js"></script>
+<script src="/page_action/js/menu/settings/settingsController.js"></script>
+<script src="/page_action/js/menu/menuController.js"></script>
 </body>
 </html>

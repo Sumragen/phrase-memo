@@ -42,12 +42,15 @@ pAction.factory('postman', ['$timeout', function ($timeout) {
     };
 }]);
 
-pAction.controller('mainController', ['postman', function (postman) {
+pAction.controller('mainController', ['postman', 'mainService', function (postman, mainService) {
     var that = this;
     that.isReady = false;
     postman('popShown').send().then(function () {
         that.isReady = true;
     });
+    that.getTemplate = function () {
+        return mainService.getTemplate();
+    }
 }]);
 
 pAction.controller('messageController', ['Logger', function (logger) {
