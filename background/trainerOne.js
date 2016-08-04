@@ -136,21 +136,35 @@
         return {get: get};
     })();
 
+    var getIndexById = function (id) {
+        var res = null;
+        utils.forEach(dictionary, function (word, index) {
+            if (word.id == id) {
+                res = index;
+            }
+        });
+        return res;
+    };
+
     /**
      * returns phrase to learn
      */
-    var getPhrase = function () {
+    var getPhrase = function (id) {
         /*todo*/
-        return dictionary[getRandomIndex(dictionary.length)];
+        if (id) {
+            return dictionary[getIndexById(id)]
+        } else {
+            return dictionary[getRandomIndex(dictionary.length)];
+        }
     };
 
     /**
      * returns array of phrases where first element is the phrase to train
      * @param len: is needed length of array to be returned
      */
-    var getPhrases = function (len) {
+    var getPhrases = function (len, id) {
         var _ids = {};
-        var _phrase = getPhrase();
+        var _phrase = getPhrase(id);
         _ids[_phrase.id] = true;
         var _phrases = [_phrase];
 
@@ -175,7 +189,7 @@
      *  },]
      * }
      */
-    var getTest = function () {
+    var getTest = function (id) {
         if (dictionary.length == 0) {
             prepareDictionary();
         }
@@ -189,7 +203,7 @@
             }
         };
         var isFirst = true;
-        utils.forEach(getPhrases(phrase_book.settings.modOne.choicesLength), function (phrase) {
+        utils.forEach(getPhrases(phrase_book.settings.modOne.choicesLength, id), function (phrase) {
             if (isFirst) {
                 test.id = phrase.id;
                 test.phrase = phrase.from;
@@ -208,6 +222,17 @@
         /*todo*/
     };
 
+    var addSomeUnsuccessfulTests = function (tests) {
+        var _unsuccessfulTests = JSON.parse(localStorage.getItem('phrase-memo')).unsuccessful.modOne || [];
+        var _amount = Math.floor(tests.length / 4);
+        utils.forEach(_unsuccessfulTests, function (id) {
+            if (_amount > 0) {
+                tests[getRandomIndex(tests.length)] = getTest(id);
+                _amount--;
+            }
+        })
+    };
+
     postman('getTestModOne').onMail(function (data, sendResponse) {
         load();
         var responseBody = {
@@ -217,6 +242,7 @@
         utils.forEach(new Array(phrase_book.settings.modOne.amountOfTests), function () {
             responseBody.tests.push(getTest());
         });
+        addSomeUnsuccessfulTests(responseBody.tests);
         sendResponse(responseBody);
     });
 
