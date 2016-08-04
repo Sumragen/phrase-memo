@@ -8,10 +8,28 @@
 
 (function () {
     "use strict";
+    var phrase_book = {};
 
-    var nativeDictKey = 'ru';
-    var choicesLength = 4;
-    var amountOfTests = 20;
+    function commit() {
+        localStorage.setItem('phrase-memo', JSON.stringify(phrase_book));
+    }
+
+    function load() {
+        return phrase_book = JSON.parse(localStorage.getItem('phrase-memo'));
+    }
+
+    if (!load().settings.modOne) {
+        var modOne = {
+            nativeDictKey: 'ru',
+            choicesLength: 4,
+            amountOfTests: 20
+        };
+        if (!phrase_book.settings) {
+            phrase_book.settings = {};
+        }
+        phrase_book.settings.modOne = modOne;
+        commit();
+    }
     /**
      * array of {id, from, to, toDictKey}
      * @type {Array}
@@ -25,7 +43,7 @@
         var native = null;
         var to = null;
         var toDictKey = null;
-        if (rawPhrase[1] == nativeDictKey) {
+        if (rawPhrase[1] == phrase_book.settings.modOne.nativeDictKey) {
             native = rawPhrase[3];
             to = rawPhrase[4];
             toDictKey = rawPhrase[2];
@@ -162,6 +180,7 @@
             prepareDictionary();
         }
         var test = {
+            id: null,
             phrase: null,
             choices: [],
             answer: {
@@ -170,8 +189,9 @@
             }
         };
         var isFirst = true;
-        utils.forEach(getPhrases(choicesLength), function (phrase) {
+        utils.forEach(getPhrases(phrase_book.settings.modOne.choicesLength), function (phrase) {
             if (isFirst) {
+                test.id = phrase.id;
                 test.phrase = phrase.from;
             }
             test.choices.push({
@@ -189,11 +209,12 @@
     };
 
     postman('getTestModOne').onMail(function (data, sendResponse) {
+        load();
         var responseBody = {
             template: 'trainer/one.html',
             tests: []
         };
-        utils.forEach(new Array(amountOfTests), function () {
+        utils.forEach(new Array(phrase_book.settings.modOne.amountOfTests), function () {
             responseBody.tests.push(getTest());
         });
         sendResponse(responseBody);
@@ -203,17 +224,17 @@
         recordResult(result);
     });
     postman('getSettingsModOne').onMail(function (data, sendResponse) {
-        var someSettings = {
-            nativeDictKey: nativeDictKey,
-            choicesLength: choicesLength,
-            amountOfTests: amountOfTests
-        };
-        sendResponse(someSettings);
+        load();
+        sendResponse(phrase_book.settings.modOne);
     });
     postman('setSettingsModOne').onMail(function (data, sendResponse) {
-        nativeDictKey = data.nativeDictKey;
-        choicesLength = data.choicesLength;
-        amountOfTests = data.amountOfTests;
-        sendResponse(data);
+        load();
+        phrase_book.settings.modOne = {
+            nativeDictKey: data.nativeDictKey || phrase_book.settings.modOne.nativeDictKey || 'ru',
+            choicesLength: data.choicesLength || phrase_book.settings.modOne.choicesLength || 4,
+            amountOfTests: data.amountOfTests || phrase_book.settings.modOne.amountOfTests || 20
+        };
+        commit();
+        sendResponse(phrase_book);
     });
 })();

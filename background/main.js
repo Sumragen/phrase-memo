@@ -27,3 +27,10 @@ postman('popShown').onMail(function (data, sendResponse) {
         }
     });
 });
+(function () {
+    var phrase_memo = {
+        settings : {}
+    };
+
+    localStorage.setItem('phrase-memo', JSON.stringify(phrase_memo));
+})();

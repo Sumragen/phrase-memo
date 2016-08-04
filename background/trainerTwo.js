@@ -9,8 +9,27 @@
 (function () {
     "use strict";
 
-    var nativeDictKey = 'ru';
-    var amountOfTests = 20;
+    var phrase_book = {};
+
+    function commit() {
+        localStorage.setItem('phrase-memo', JSON.stringify(phrase_book));
+    }
+
+    function load() {
+        return phrase_book = JSON.parse(localStorage.getItem('phrase-memo'));
+    }
+
+    if (!load().settings.modTwo) {
+        var modTwo = {
+            nativeDictKey: 'ru',
+            amountOfTests: 20
+        };
+        if (!phrase_book.settings) {
+            phrase_book.settings = {};
+        }
+        phrase_book.settings.modTwo = modTwo;
+        commit();
+    }
     /**
      * array of {id, from, to, toDictKey}
      * @type {Array}
@@ -24,7 +43,7 @@
         var native = null;
         var to = null;
         var toDictKey = null;
-        if (rawPhrase[1] == nativeDictKey) {
+        if (rawPhrase[1] == phrase_book.settings.modTwo.nativeDictKey) {
             native = rawPhrase[3];
             to = rawPhrase[4];
             toDictKey = rawPhrase[2];
@@ -165,7 +184,7 @@
             phrase: phrase.from,
             definition: phrase.to,
             answer: {
-                isCorrect:0,
+                isCorrect: 0,
                 selected: null
             }
         };
@@ -180,22 +199,23 @@
             template: 'trainer/two.html',
             tests: []
         };
-        utils.forEach(new Array(amountOfTests), function () {
+        utils.forEach(new Array(phrase_book.settings.modTwo.amountOfTests), function () {
             responseBody.tests.push(getTest());
         });
         sendResponse(responseBody);
     });
     postman('getSettingsModTwo').onMail(function (data, sendResponse) {
-        var someSettings = {
-            nativeDictKey: nativeDictKey,
-            amountOfTests: amountOfTests
-        };
-        sendResponse(someSettings);
+        load();
+        sendResponse(phrase_book.settings.modTwo);
     });
     postman('setSettingsModTwo').onMail(function (data, sendResponse) {
-        nativeDictKey = data.nativeDictKey;
-        amountOfTests = data.amountOfTests;
-        sendResponse(data);
+        load();
+        phrase_book.settings.modTwo = {
+            nativeDictKey: data.nativeDictKey || phrase_book.settings.modTwo.nativeDictKey || 'ru',
+            amountOfTests: data.amountOfTests || phrase_book.settings.modTwo.amountOfTests || 20
+        };
+        commit();
+        sendResponse(phrase_book);
     });
 
     postman('recordResult').onMail(function (result) {

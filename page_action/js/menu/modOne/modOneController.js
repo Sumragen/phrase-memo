@@ -7,9 +7,11 @@ pAction.controller('modOneController', [
     'mainService',
     function (postman, $scope, mainService) {
         var that = this;
+        that.amountOfCorrectAnswers = 0;
         that.test_index = 0;
         that.result = null;
         that.tests = mainService.getTests();
+        that.amountOfFinishedTests = 0;
         $scope.prevTest = function () {
             $scope.setTestIndex(that.test_index <= 0 ? that.test_index : --that.test_index);
         };
@@ -27,6 +29,10 @@ pAction.controller('modOneController', [
             if (that.tests[that.test_index].answer.isCorrect == 0) {
                 that.tests[that.test_index].answer.isCorrect = check.isCorrect ? 1 : -1;
                 that.tests[that.test_index].answer.selected = that.result;
+                if(check.isCorrect){
+                    ++that.amountOfCorrectAnswers;
+                }
+                ++that.amountOfFinishedTests;
             }
         };
 

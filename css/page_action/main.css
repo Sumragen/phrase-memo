@@ -10,15 +10,16 @@
 @import "bootstrap-material-design.css";
 @import "ripples.css";
 
-.form-group{
+.form-group {
     margin: 0;
     padding-bottom: 0;
 }
-.form-group label.control-label{
+
+.form-group label.control-label {
     margin: 0;
 }
 
-.s-container{
+.s-container {
     height: 270px;
     /*top: 20px;*/
     /*overflow-y: auto;*/
@@ -92,3 +93,7 @@
 /*span.s-main-container:hover p.s-svg-welcome::after {*/
 /*content: "START!";*/
 /*}*/
+.message-on-finished-tests {
+    margin-left: 180px;
+    padding-bottom: 220px;
+}
