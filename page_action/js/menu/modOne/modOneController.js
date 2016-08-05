@@ -31,14 +31,14 @@ pAction.controller('modOneController', [
 
         $scope.setAnswer = function (check) {
             if (that.tests[that.test_index].answer.isCorrect == 0) {
-                if(check.isCorrect){
+                if (check.isCorrect) {
                     that.tests[that.test_index].answer.isCorrect = 1;
                     utils.forEach(unsuccessfulTestsFromLS, function (test, index) {
-                        if(that.tests[that.test_index].id == test){
-                            delete unsuccessfulTestsFromLS[index];
+                        if (that.tests[that.test_index].id == test) {
+                            unsuccessfulTestsFromLS.splice(index, 1);
                         }
                     })
-                }else{
+                } else {
                     _incorrectAnswers.push(that.tests[that.test_index].id);
                     that.tests[that.test_index].answer.isCorrect = -1;
                 }
@@ -48,8 +48,7 @@ pAction.controller('modOneController', [
                     ++that.amountOfCorrectAnswers;
                 }
                 ++that.amountOfFinishedTests;
-                if(that.amountOfFinishedTests == that.tests.length){
-                    console.log(_incorrectAnswers);
+                if (that.amountOfFinishedTests == that.tests.length) {
                     var _phrase_memo = JSON.parse(localStorage.getItem('phrase-memo'));
                     utils.forEach(_incorrectAnswers, function (answer) {
                         unsuccessfulTestsFromLS.push(answer);
