@@ -10,10 +10,32 @@ pAction.controller('modTwoController', [
         that.result = null;
         that.tests = mainService.getTests();
         that.test_index = 0;
+        that.amountOfFinishedTests = 0;
+        that.amountOfCorrectAnswers = 0;
+
+        var unsuccessfulTestsFromLS = JSON.parse(localStorage.getItem('phrase-memo')).unsuccessful.modTwo || [];
+        var _incorrectAnswers = [];
+
+        var checkIsDone = function () {
+            if (that.amountOfFinishedTests == that.tests.length) {
+                var _phrase_memo = JSON.parse(localStorage.getItem('phrase-memo'));
+                utils.forEach(_incorrectAnswers, function (answer) {
+                    unsuccessfulTestsFromLS.push(answer);
+                });
+                _phrase_memo.unsuccessful.modTwo = unsuccessfulTestsFromLS;
+                localStorage.setItem('phrase-memo', JSON.stringify(_phrase_memo))
+            }
+        };
 
         that.showAnswer = function () {
-            that.tests[that.test_index].answer.isCorrect = -1;
-            that.tests[that.test_index].answer.selected = that.result = that.tests[that.test_index].definition;
+            if(that.tests[that.test_index].answer.isCorrect == 0){
+                that.tests[that.test_index].answer.isCorrect = -1;
+                that.tests[that.test_index].answer.selected = that.result = that.tests[that.test_index].definition;
+                ++that.amountOfFinishedTests;
+
+                _incorrectAnswers.push(that.tests[that.test_index].id);
+                checkIsDone();
+            }
         };
         that.isCorrect = function () {
             return that.result == that.tests[that.test_index].definition
@@ -22,11 +44,19 @@ pAction.controller('modTwoController', [
         that.returnToMenu = function () {
             mainService.returnToMenu();
         };
-        
+
         that.checkAnswer = function (check) {
             if (check == that.tests[that.test_index].definition) {
                 that.tests[that.test_index].answer.isCorrect = 1;
                 that.tests[that.test_index].answer.selected = that.result;
+                ++that.amountOfCorrectAnswers;
+                ++that.amountOfFinishedTests;
+                utils.forEach(unsuccessfulTestsFromLS, function (test, index) {
+                    if (that.tests[that.test_index].id == test) {
+                        unsuccessfulTestsFromLS.splice(index, 1);
+                    }
+                });
+                checkIsDone();
             }
         };
 

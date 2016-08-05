@@ -136,32 +136,26 @@
         return {get: get};
     })();
 
-    /**
-     * returns phrase to learn
-     */
-    var getPhrase = function () {
-        /*todo*/
-        return dictionary[getRandomIndex(dictionary.length)];
+    var getIndexById = function (id) {
+        var res = null;
+        utils.forEach(dictionary, function (word, index) {
+            if (word.id == id) {
+                res = index;
+            }
+        });
+        return res;
     };
 
     /**
-     * returns array of phrases where first element is the phrase to train
-     * @param len: is needed length of array to be returned
+     * returns phrase to learn
      */
-    var getPhrases = function (len) {
-        var _ids = {};
-        var _phrase = getPhrase();
-        _ids[_phrase.id] = true;
-        var _phrases = [_phrase];
-
-        while (_phrases.length < len) {
-            var _possiblePhrase = randomBasePhrases.get();
-            if (!(_possiblePhrase.id in _ids)) {
-                _ids[_possiblePhrase.id] = true;
-                _phrases.push(_possiblePhrase);
-            }
+    var getPhrase = function (id) {
+        /*todo*/
+        if (id) {
+            return dictionary[getIndexById(id)]
+        } else {
+            return dictionary[getRandomIndex(dictionary.length)];
         }
-        return _phrases;
     };
 
     /**
@@ -175,12 +169,13 @@
      *  },]
      * }
      */
-    var getTest = function () {
+    var getTest = function (id) {
         if (dictionary.length == 0) {
             prepareDictionary();
         }
-        var phrase = getPhrase();
+        var phrase = getPhrase(id);
         return {
+            id: phrase.id,
             phrase: phrase.from,
             definition: phrase.to,
             answer: {
@@ -194,6 +189,17 @@
         /*todo*/
     };
 
+    var addSomeUnsuccessfulTests = function (tests) {
+        var _unsuccessfulTests = JSON.parse(localStorage.getItem('phrase-memo')).unsuccessful.modTwo || [];
+        var _amount = Math.floor(tests.length / 4);
+        utils.forEach(_unsuccessfulTests, function (id) {
+            if (_amount > 0) {
+                tests[getRandomIndex(tests.length)] = getTest(id);
+                _amount--;
+            }
+        })
+    };
+
     postman('getTestModTwo').onMail(function (data, sendResponse) {
         var responseBody = {
             template: 'trainer/two.html',
@@ -202,6 +208,7 @@
         utils.forEach(new Array(phrase_book.settings.modTwo.amountOfTests), function () {
             responseBody.tests.push(getTest());
         });
+        addSomeUnsuccessfulTests(responseBody.tests);
         sendResponse(responseBody);
     });
     postman('getSettingsModTwo').onMail(function (data, sendResponse) {
