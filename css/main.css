@@ -1,14 +1,14 @@
-@import "line-animation/line-animation.css";
-@import "common.css";
-@import "btn-fab.css";
-@import "btn-animation/btn-spec.css";
-@import "btn-animation/btn-animation.css";
-@import "loader.css";
-@import "roboto.css";
-@import "material-icons.css";
-@import "bootstrap.min.css";
-@import "bootstrap-material-design.css";
-@import "ripples.css";
+@import "page_action/line-animation/line-animation.css";
+@import "page_action/common.css";
+@import "page_action/btn-fab.css";
+@import "page_action/btn-animation/btn-spec.css";
+@import "page_action/btn-animation/btn-animation.css";
+@import "page_action/loader.css";
+@import "lib/roboto.css";
+@import "lib/material-icons.css";
+@import "lib/bootstrap.min.css";
+@import "lib/bootstrap-material-design.css";
+@import "lib/ripples.css";
 
 .form-group {
     margin: 0;

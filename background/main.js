@@ -19,7 +19,7 @@ postman('popShown').onMail(function (data, sendResponse) {
     /*send message about to xt*/
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
         if (tabs.length > 0) {
-            postman('giveXT').send('', tabs[0].id).then(function (data) {
+            postman('giveXT').send(' ', tabs[0].id).then(function (data) {
                 if ('xt' in data) {
                     getPhrases(data['xt']).done(sendResponse);
                 }

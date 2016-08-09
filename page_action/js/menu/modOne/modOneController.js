@@ -13,13 +13,12 @@ pAction.controller('modOneController', [
         that.tests = mainService.getTests();
         that.amountOfFinishedTests = 0;
         var unsuccessfulTestsFromLS = [];
+        var _incorrectAnswers = [];
         (function () {
             chrome.storage.sync.get('PHRASE-MEMO', function (res) {
                 unsuccessfulTestsFromLS = res['PHRASE-MEMO'].unsuccessful.modOne || [];
             })
         })();
-
-        var _incorrectAnswers = [];
 
         $scope.prevTest = function () {
             $scope.setTestIndex(that.test_index <= 0 ? that.test_index : --that.test_index);
@@ -36,7 +35,9 @@ pAction.controller('modOneController', [
 
         $scope.setAnswer = function (check) {
             if (that.tests[that.test_index].answer.isCorrect == 0) {
+                that.tests[that.test_index].answer.selected = that.result;
                 if (check.isCorrect) {
+                    ++that.amountOfCorrectAnswers;
                     that.tests[that.test_index].answer.isCorrect = 1;
                     utils.forEach(unsuccessfulTestsFromLS, function (test, index) {
                         if (that.tests[that.test_index].id == test) {
@@ -47,19 +48,14 @@ pAction.controller('modOneController', [
                     _incorrectAnswers.push(that.tests[that.test_index].id);
                     that.tests[that.test_index].answer.isCorrect = -1;
                 }
-                that.tests[that.test_index].answer.selected = that.result;
-                if (check.isCorrect) {
-                    ++that.amountOfCorrectAnswers;
-                }
-                ++that.amountOfFinishedTests;
-                if (that.amountOfFinishedTests == that.tests.length) {
+                if (++that.amountOfFinishedTests == that.tests.length) {
                     chrome.storage.sync.get('PHRASE-MEMO', function (res) {
                         var _phrase_memo = res['PHRASE-MEMO'];
                         utils.forEach(_incorrectAnswers, function (answer) {
                             unsuccessfulTestsFromLS.push(answer);
                         });
                         _phrase_memo.unsuccessful.modOne = unsuccessfulTestsFromLS;
-                        chrome.storage.sync.set({'PHRASE-MEMO' : _phrase_memo});
+                        chrome.storage.sync.set({'PHRASE-MEMO': _phrase_memo});
                     });
                 }
             }
