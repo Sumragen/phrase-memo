@@ -12,8 +12,13 @@ pAction.controller('modOneController', [
         that.result = null;
         that.tests = mainService.getTests();
         that.amountOfFinishedTests = 0;
+        var unsuccessfulTestsFromLS = [];
+        (function () {
+            chrome.storage.sync.get('PHRASE-MEMO', function (res) {
+                unsuccessfulTestsFromLS = res['PHRASE-MEMO'].unsuccessful.modOne || [];
+            })
+        })();
 
-        var unsuccessfulTestsFromLS = JSON.parse(localStorage.getItem('phrase-memo')).unsuccessful.modOne || [];
         var _incorrectAnswers = [];
 
         $scope.prevTest = function () {
@@ -42,19 +47,20 @@ pAction.controller('modOneController', [
                     _incorrectAnswers.push(that.tests[that.test_index].id);
                     that.tests[that.test_index].answer.isCorrect = -1;
                 }
-                // that.tests[that.test_index].answer.isCorrect = check.isCorrect ? 1 : -1;
                 that.tests[that.test_index].answer.selected = that.result;
                 if (check.isCorrect) {
                     ++that.amountOfCorrectAnswers;
                 }
                 ++that.amountOfFinishedTests;
                 if (that.amountOfFinishedTests == that.tests.length) {
-                    var _phrase_memo = JSON.parse(localStorage.getItem('phrase-memo'));
-                    utils.forEach(_incorrectAnswers, function (answer) {
-                        unsuccessfulTestsFromLS.push(answer);
+                    chrome.storage.sync.get('PHRASE-MEMO', function (res) {
+                        var _phrase_memo = res['PHRASE-MEMO'];
+                        utils.forEach(_incorrectAnswers, function (answer) {
+                            unsuccessfulTestsFromLS.push(answer);
+                        });
+                        _phrase_memo.unsuccessful.modOne = unsuccessfulTestsFromLS;
+                        chrome.storage.sync.set({'PHRASE-MEMO' : _phrase_memo});
                     });
-                    _phrase_memo.unsuccessful.modOne = unsuccessfulTestsFromLS;
-                    localStorage.setItem('phrase-memo', JSON.stringify(_phrase_memo))
                 }
             }
         };

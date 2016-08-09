@@ -12,23 +12,31 @@ pAction.controller('modTwoController', [
         that.test_index = 0;
         that.amountOfFinishedTests = 0;
         that.amountOfCorrectAnswers = 0;
+        var unsuccessfulTestsFromLS = [];
+        (function () {
+            chrome.storage.sync.get('PHRASE-MEMO', function (res) {
+                unsuccessfulTestsFromLS = res['PHRASE-MEMO'].unsuccessful.modTwo || [];
+            })
+        })();
 
-        var unsuccessfulTestsFromLS = JSON.parse(localStorage.getItem('phrase-memo')).unsuccessful.modTwo || [];
         var _incorrectAnswers = [];
 
         var checkIsDone = function () {
             if (that.amountOfFinishedTests == that.tests.length) {
-                var _phrase_memo = JSON.parse(localStorage.getItem('phrase-memo'));
-                utils.forEach(_incorrectAnswers, function (answer) {
-                    unsuccessfulTestsFromLS.push(answer);
+                var unsuccessfulTestsFromLS = [];
+                chrome.storage.sync.get('PHRASE-MEMO', function (res) {
+                    var _phrase_memo = res['PHRASE-MEMO'];
+                    utils.forEach(_incorrectAnswers, function (answer) {
+                        unsuccessfulTestsFromLS.push(answer);
+                    });
+                    _phrase_memo.unsuccessful.modTwo = unsuccessfulTestsFromLS;
+                    chrome.storage.sync.set({'PHRASE-MEMO': _phrase_memo});
                 });
-                _phrase_memo.unsuccessful.modTwo = unsuccessfulTestsFromLS;
-                localStorage.setItem('phrase-memo', JSON.stringify(_phrase_memo))
             }
         };
 
         that.showAnswer = function () {
-            if(that.tests[that.test_index].answer.isCorrect == 0){
+            if (that.tests[that.test_index].answer.isCorrect == 0) {
                 that.tests[that.test_index].answer.isCorrect = -1;
                 that.tests[that.test_index].answer.selected = that.result = that.tests[that.test_index].definition;
                 ++that.amountOfFinishedTests;

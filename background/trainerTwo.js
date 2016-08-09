@@ -12,24 +12,16 @@
     var phrase_book = {};
 
     function commit() {
-        localStorage.setItem('phrase-memo', JSON.stringify(phrase_book));
+        chrome.storage.sync.set({'PHRASE-MEMO': phrase_book});
     }
 
-    function load() {
-        return phrase_book = JSON.parse(localStorage.getItem('phrase-memo'));
+    function load(cb) {
+        chrome.storage.sync.get('PHRASE-MEMO', function (res) {
+            phrase_book = res['PHRASE-MEMO'];
+            cb();
+        });
     }
 
-    if (!load().settings.modTwo) {
-        var modTwo = {
-            nativeDictKey: 'ru',
-            amountOfTests: 20
-        };
-        if (!phrase_book.settings) {
-            phrase_book.settings = {};
-        }
-        phrase_book.settings.modTwo = modTwo;
-        commit();
-    }
     /**
      * array of {id, from, to, toDictKey}
      * @type {Array}
@@ -190,7 +182,7 @@
     };
 
     var addSomeUnsuccessfulTests = function (tests) {
-        var _unsuccessfulTests = JSON.parse(localStorage.getItem('phrase-memo')).unsuccessful.modTwo || [];
+        var _unsuccessfulTests = phrase_book.unsuccessful.modTwo || [];
         var _amount = Math.floor(tests.length / 4);
         utils.forEach(_unsuccessfulTests, function (id) {
             if (_amount > 0) {
@@ -201,28 +193,32 @@
     };
 
     postman('getTestModTwo').onMail(function (data, sendResponse) {
-        var responseBody = {
-            template: 'trainer/two.html',
-            tests: []
-        };
-        utils.forEach(new Array(phrase_book.settings.modTwo.amountOfTests), function () {
-            responseBody.tests.push(getTest());
+        load(function () {
+            var responseBody = {
+                template: 'trainer/two.html',
+                tests: []
+            };
+            utils.forEach(new Array(phrase_book.settings.modTwo.amountOfTests), function () {
+                responseBody.tests.push(getTest());
+            });
+            addSomeUnsuccessfulTests(responseBody.tests);
+            sendResponse(responseBody);
         });
-        addSomeUnsuccessfulTests(responseBody.tests);
-        sendResponse(responseBody);
     });
     postman('getSettingsModTwo').onMail(function (data, sendResponse) {
-        load();
-        sendResponse(phrase_book.settings.modTwo);
+        load(function () {
+            sendResponse(phrase_book.settings.modTwo);
+        });
     });
     postman('setSettingsModTwo').onMail(function (data, sendResponse) {
-        load();
-        phrase_book.settings.modTwo = {
-            nativeDictKey: data.nativeDictKey || phrase_book.settings.modTwo.nativeDictKey || 'ru',
-            amountOfTests: data.amountOfTests || phrase_book.settings.modTwo.amountOfTests || 20
-        };
-        commit();
-        sendResponse(phrase_book);
+        load(function () {
+            phrase_book.settings.modTwo = {
+                nativeDictKey: data.nativeDictKey || phrase_book.settings.modTwo.nativeDictKey || 'ru',
+                amountOfTests: data.amountOfTests || phrase_book.settings.modTwo.amountOfTests || 20
+            };
+            commit();
+            sendResponse(phrase_book);
+        });
     });
 
     postman('recordResult').onMail(function (result) {

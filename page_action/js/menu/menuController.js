@@ -13,7 +13,7 @@ pAction.controller('menuController', [
                 mainService.setTemplate(res.template);
             });
         }
-        
+
         $scope.openTestModOne = function () {
             getTest('getTestModOne');
         };

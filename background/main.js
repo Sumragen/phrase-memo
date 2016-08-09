@@ -28,10 +28,32 @@ postman('popShown').onMail(function (data, sendResponse) {
     });
 });
 (function () {
+    var modOne = {
+        nativeDictKey: 'ru',
+        choicesLength: 4,
+        amountOfTests: 20
+    };
+    var modTwo = {
+        nativeDictKey: 'ru',
+        amountOfTests: 20
+    };
     var phrase_memo = {
-        settings : {},
-        unsuccessful: {}
+        settings: {
+            modOne: modOne,
+            modTwo: modTwo
+        },
+        unsuccessful: {
+            modOne: [],
+            modTwo: []
+        }
     };
 
-    localStorage.setItem('phrase-memo', JSON.stringify(phrase_memo));
+    chrome.storage.sync.get('PHRASE-MEMO', function (res) {
+        if (!res['PHRASE-MEMO']) {
+            chrome.storage.sync.set({'PHRASE-MEMO': phrase_memo}, function () {
+                console.info('PHRASE-MEMO saved;');
+
+            });
+        }
+    });
 })();
