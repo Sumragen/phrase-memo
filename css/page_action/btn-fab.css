@@ -1,8 +1,8 @@
-.s-btn-fab{
+.s-btn-fab {
     border-radius: 50% !important;
-     font-size: 14px !important;
+    font-size: 14px !important;
     height: 26px !important;
-     min-width: 26px !important;
+    min-width: 26px !important;
     width: 26px !important;
     padding: 2px !important;
     margin: 6px !important;
@@ -11,4 +11,14 @@
     box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
     position: relative;
     line-height: normal;
+}
+
+.s-left-toolbar {
+    position: absolute;
+    left: 60px;
+}
+
+.s-right-toolbar {
+    position: absolute;
+    right: 60px;
 }

@@ -41,7 +41,12 @@ pAction.controller('settingsController', [
             }
         };
 
+        $scope.setDifficultIndex = function (index) {
+            that.difficult_index = index;
+        };
+
         that.getSettingsFor = function (index) {
+            that.template_index = index;
             postman('getSettings' + that.settingsEndpoint[index].name).send().then(function (res) {
                 that.settingsParams = res;
             })

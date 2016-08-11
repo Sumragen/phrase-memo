@@ -1,10 +1,19 @@
-<div class="form-group">
-    <label for="change_diff" class="col-md-2 control-label">Change difficult</label>
-    <div class="col-md-10">
-        <select id="change_diff" class="form-control" ng-model="settingsCtrl.difficult_index">
-            <option>Easy</option>
-            <option>Normal</option>
-            <option>Hard</option>
-        </select>
-    </div>
+<div class="col-sm-12">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-md-2 control-label">Change difficult</label>
+            <div class="col-md-10">
+                <div ng-repeat="choice in ['Easy','Normal','Hard']">
+                    <div class="radio choice radio-primary">
+                        <label class="s-not-selected-radio"
+                               ng-class="{'s-has-success' : settingsCtrl.difficult_index == choice}">
+                            <input type="radio" name="change_diff" ng-model="settingsCtrl.difficult_index"
+                                   value="{{choice}}" ng-click="setDifficultIndex(choice)">
+                            {{choice}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>

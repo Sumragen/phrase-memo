@@ -22,7 +22,6 @@
                         : 'radio_button_unchecked'}}</i>
                 </a>
             </div>
-
             <div class="col-sm-12 phrase">
                 <h3>Phrase : </h3>
                 <div>
@@ -53,13 +52,14 @@
                 </div>
             </div>
         </div>
+    </div>
 
-
-        <div class="col-sm-7 col-sm-offset-5">
-            <a class="btn btn-default" ng-click="returnToMenu()">Menu</a>
-            <a class="btn btn-primary" ng-click="prevTest()" ng-disabled="mOneCtrl.test_index <= 0">Prev</a>
-            <a class="btn btn-success" ng-click="nextTest()"
-               ng-disabled="mOneCtrl.test_index >= mOneCtrl.tests.length - 1">Next</a>
-        </div>
+    <div class="display-inline-block s-left-toolbar">
+        <a class="btn btn-default" ng-click="returnToMenu()">Menu</a>
+    </div>
+    <div class="btn-group display-inline-block float-right s-right-toolbar">
+        <a class="btn btn-primary" ng-click="prevTest()" ng-disabled="mOneCtrl.test_index <= 0">Prev</a>
+        <a class="btn btn-success" ng-click="nextTest()"
+           ng-disabled="mOneCtrl.test_index >= mOneCtrl.tests.length - 1">Next</a>
     </div>
 </div>

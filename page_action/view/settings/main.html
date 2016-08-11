@@ -1,30 +1,30 @@
 <div ng-controller="settingsController as settingsCtrl">
     <div class="col-sm-12">
-        <h2>SETTINGS</h2>
-        <div class="line-separator"></div>
-    </div>
 
-    <div class="s-right-title">
-        <label for="select_label" class="col-md-2 control-label">Select label</label>
-
-        <div class="col-md-10">
-            <select id="select_label"
-                    class="form-control"
-                    ng-model="settingsCtrl.template_index"
-                    ng-change="settingsCtrl.getSettingsFor(settingsCtrl.template_index)">
-                <option>Mod I</option>
-                <option>Mod II</option>
-                <option>Global</option>
-            </select>
+        <div class="display-inline-block">
+            <h2>SETTINGS</h2>
         </div>
+
+        <div class="btn-group display-inline-block float-right">
+            <a data-target="#" class="btn dropdown-toggle s-title-btn" data-toggle="dropdown"
+               ng-bind="settingsCtrl.template_index || 'LABEL'">
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li ng-click="settingsCtrl.getSettingsFor('Mod I')"><a href="">MOD I</a></li>
+                <li ng-click="settingsCtrl.getSettingsFor('Mod II')"><a href="">MOD II</a></li>
+                <li ng-click="settingsCtrl.getSettingsFor('Global')"><a href="">GLOBAL</a></li>
+            </ul>
+        </div>
+        <div class="line-separator"></div>
+        <h5>Selected "{{settingsCtrl.template_index}}" label</h5>
     </div>
 
     <div class="s-container">
         <div ng-include="'/page_action/view/settings/' + settingsCtrl.settingsEndpoint[settingsCtrl.template_index].template"></div>
     </div>
 
-    <div class="col-sm-7 col-sm-offset-5">
-        <a class="btn btn-default" ng-click="settingsCtrl.returnToMenu()">Menu</a>
-        <a class="btn btn-primary" ng-click="settingsCtrl.applyChanges(settingsCtrl.template_index)">Apply</a>
-    </div>
+    <a class="btn btn-default display-inline-block s-left-toolbar" ng-click="settingsCtrl.returnToMenu()">Menu</a>
+    <a class="btn btn-primary display-inline-block float-right s-right-toolbar"
+       ng-click="settingsCtrl.applyChanges(settingsCtrl.template_index)">Apply</a>
 </div>

@@ -20,12 +20,19 @@
 }
 
 .s-container {
-    height: 270px;
-    /*top: 20px;*/
-    /*overflow-y: auto;*/
-    /*overflow-x: hidden;*/
+    height: 66vh;
     position: relative;
-    /*bottom: 20px;*/
+    overflow: auto;
+}
+
+.footer_btn {
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+}
+
+.col-sm-12 {
+    float: none !important;
 }
 
 .s-svg-container {
@@ -96,4 +103,17 @@
 .message-on-finished-tests {
     margin-left: 180px;
     padding-bottom: 220px;
+}
+
+.float-right {
+    float: right;
+}
+
+.display-inline-block {
+    display: inline-block;
+}
+
+.s-title-btn {
+    width: 150px;
+    top: 10px;
 }
