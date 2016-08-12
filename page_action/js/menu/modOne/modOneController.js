@@ -12,8 +12,8 @@ pAction.controller('modOneController', [
         that.result = null;
         that.tests = mainService.getTests();
         that.amountOfFinishedTests = 0;
+        that.incorrectAnswers = [];
         var unsuccessfulTestsFromLS = [];
-        var _incorrectAnswers = [];
         (function () {
             chrome.storage.sync.get('PHRASE-MEMO', function (res) {
                 unsuccessfulTestsFromLS = res['PHRASE-MEMO'].unsuccessful.modOne || [];
@@ -34,25 +34,32 @@ pAction.controller('modOneController', [
         };
 
         $scope.setAnswer = function (check) {
-            if (that.tests[that.test_index].answer.isCorrect == 0) {
-                that.tests[that.test_index].answer.selected = that.result;
+            var currentTest = that.tests[that.test_index];
+            if (currentTest.answer.isCorrect == 0) {
+                currentTest.answer.selected = that.result;
                 if (check.isCorrect) {
                     ++that.amountOfCorrectAnswers;
-                    that.tests[that.test_index].answer.isCorrect = 1;
+                    currentTest.answer.isCorrect = 1;
                     utils.forEach(unsuccessfulTestsFromLS, function (test, index) {
-                        if (that.tests[that.test_index].id == test) {
+                        if (currentTest.id == test) {
                             unsuccessfulTestsFromLS.splice(index, 1);
                         }
                     })
                 } else {
-                    _incorrectAnswers.push(that.tests[that.test_index].id);
-                    that.tests[that.test_index].answer.isCorrect = -1;
+                    that.incorrectAnswers.push({
+                        id: currentTest.id,
+                        test: that.test_index,
+                        from: currentTest.phrase,
+                        to: currentTest.correct,
+                        answer: currentTest.answer.selected.choice
+                    });
+                    currentTest.answer.isCorrect = -1;
                 }
                 if (++that.amountOfFinishedTests == that.tests.length) {
                     chrome.storage.sync.get('PHRASE-MEMO', function (res) {
                         var _phrase_memo = res['PHRASE-MEMO'];
-                        utils.forEach(_incorrectAnswers, function (answer) {
-                            unsuccessfulTestsFromLS.push(answer);
+                        utils.forEach(that.incorrectAnswers, function (answer) {
+                            unsuccessfulTestsFromLS.push(answer.id);
                         });
                         _phrase_memo.unsuccessful.modOne = unsuccessfulTestsFromLS;
                         chrome.storage.sync.set({'PHRASE-MEMO': _phrase_memo});

@@ -10,7 +10,7 @@ body {
     font-weight: bold;
 }
 
-.s-not-selected-radio{
+.s-not-selected-radio {
     color: #585858 !important;
 }
 
@@ -26,4 +26,8 @@ body {
     height: 1px;
     background: #717171;
     border-bottom: 1px solid #313030;
+}
+
+.text-center {
+    text-align: center;
 }

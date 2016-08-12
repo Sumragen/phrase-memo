@@ -187,6 +187,7 @@
         var test = {
             id: null,
             phrase: null,
+            correct: null,
             choices: [],
             answer: {
                 isCorrect: 0,
@@ -198,6 +199,7 @@
             if (isFirst) {
                 test.id = phrase.id;
                 test.phrase = phrase.from;
+                test.correct = phrase.to;
             }
             test.choices.push({
                 choice: phrase.to,

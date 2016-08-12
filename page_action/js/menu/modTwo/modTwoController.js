@@ -12,6 +12,7 @@ pAction.controller('modTwoController', [
         that.test_index = 0;
         that.amountOfFinishedTests = 0;
         that.amountOfCorrectAnswers = 0;
+        that.incorrectAnswers = [];
         var unsuccessfulTestsFromLS = [];
         (function () {
             chrome.storage.sync.get('PHRASE-MEMO', function (res) {
@@ -19,15 +20,13 @@ pAction.controller('modTwoController', [
             })
         })();
 
-        var _incorrectAnswers = [];
-
         var checkIsDone = function () {
             if (that.amountOfFinishedTests == that.tests.length) {
                 var unsuccessfulTestsFromLS = [];
                 chrome.storage.sync.get('PHRASE-MEMO', function (res) {
                     var _phrase_memo = res['PHRASE-MEMO'];
-                    utils.forEach(_incorrectAnswers, function (answer) {
-                        unsuccessfulTestsFromLS.push(answer);
+                    utils.forEach(that.incorrectAnswers, function (answer) {
+                        unsuccessfulTestsFromLS.push(answer.id);
                     });
                     _phrase_memo.unsuccessful.modTwo = unsuccessfulTestsFromLS;
                     chrome.storage.sync.set({'PHRASE-MEMO': _phrase_memo});
@@ -36,12 +35,20 @@ pAction.controller('modTwoController', [
         };
 
         that.showAnswer = function () {
-            if (that.tests[that.test_index].answer.isCorrect == 0) {
-                that.tests[that.test_index].answer.isCorrect = -1;
-                that.tests[that.test_index].answer.selected = that.result = that.tests[that.test_index].definition;
+            var currentTest = that.tests[that.test_index];
+            var currentAnswer = currentTest.answer;
+
+            if (currentAnswer.isCorrect == 0) {
+                currentAnswer.isCorrect = -1;
+                currentAnswer.selected = that.result = currentTest.definition;
                 ++that.amountOfFinishedTests;
 
-                _incorrectAnswers.push(that.tests[that.test_index].id);
+                that.incorrectAnswers.push({
+                    id: currentTest.id,
+                    test: that.test_index,
+                    from: currentTest.phrase,
+                    to: currentTest.definition
+                });
                 checkIsDone();
             }
         };
@@ -54,13 +61,16 @@ pAction.controller('modTwoController', [
         };
 
         that.checkAnswer = function (check) {
-            if (check == that.tests[that.test_index].definition) {
-                that.tests[that.test_index].answer.isCorrect = 1;
-                that.tests[that.test_index].answer.selected = that.result;
+            var currentTest = that.tests[that.test_index];
+            var currentAnswer = currentTest.answer;
+
+            if (check == currentTest.definition) {
+                currentAnswer.isCorrect = 1;
+                currentAnswer.selected = that.result;
                 ++that.amountOfCorrectAnswers;
                 ++that.amountOfFinishedTests;
                 utils.forEach(unsuccessfulTestsFromLS, function (test, index) {
-                    if (that.tests[that.test_index].id == test) {
+                    if (currentTest.id == test) {
                         unsuccessfulTestsFromLS.splice(index, 1);
                     }
                 });

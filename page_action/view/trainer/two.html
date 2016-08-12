@@ -35,15 +35,24 @@
         </div>
 
         <div ng-show="mTwoCtrl.amountOfFinishedTests == mTwoCtrl.tests.length">
-            <div class="col-sm-6 message-on-finished-tests">
-                <div class="alert alert-dismissible alert-success phrase">
-                    <button type="button" class="close" data-dismiss="alert" ng-click="returnToMenu()">×</button>
-                    <!--to do: different text-->
-                    <strong>Well done!</strong>
-                    <p>Total: {{mTwoCtrl.tests.length}}</p>
-                    <p>Correct: {{mTwoCtrl.amountOfCorrectAnswers}}</p>
-                </div>
-            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr class="text-center phrase">
+                    <td>#</td>
+                    <td>TEST №</td>
+                    <td>FROM</td>
+                    <td>TO</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="text-center" ng-repeat="answer in mTwoCtrl.incorrectAnswers track by $index">
+                    <td>{{$index + 1}}</td>
+                    <td>{{answer.test + 1}}</td>
+                    <td>{{answer.from}}</td>
+                    <td>{{answer.to}}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
