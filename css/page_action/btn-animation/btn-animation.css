@@ -1,4 +1,4 @@
-.s-common-btn:hover {
+.s-common-btn:hover:not(.s-disabled-btn) {
     animation: btn-common-animation .4s forwards;
     -webkit-animation: btn-common-animation .4s forwards;
 }
